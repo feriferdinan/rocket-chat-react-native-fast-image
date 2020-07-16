@@ -1,5 +1,5 @@
 {
-    "name": "react-native-fast-image",
+    "name": "@rocket.chat/react-native-fast-image",
     "version": "8.1.5",
     "description": "🚩 FastImage, performant React Native image component.",
     "keywords": [
@@ -12,6 +12,9 @@
     "homepage": "https://github.com/DylanVann/react-native-fast-image#readme",
     "bugs": {
         "url": "https://github.com/DylanVann/react-native-fast-image/issues"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "repository": {
         "type": "git",

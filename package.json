@@ -1,6 +1,6 @@
 {
     "name": "@rocket.chat/react-native-fast-image",
-    "version": "8.1.5",
+    "version": "8.2.0",
     "description": "🚩 FastImage, performant React Native image component.",
     "keywords": [
         "cache",

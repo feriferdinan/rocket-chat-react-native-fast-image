@@ -49,4 +49,3 @@ RCT_EXPORT_METHOD(clearDiskCache:(RCTPromiseResolveBlock)resolve reject:(RCTProm
 }
 
 @end
-

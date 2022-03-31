@@ -10,11 +10,13 @@ import {
     ShadowStyleIOS,
     StyleProp,
     TransformsStyle,
+    AccessibilityProps,
+    ViewProps,
 } from 'react-native'
 
 const FastImageViewNativeModule = NativeModules.FastImageView
 
-type ResizeMode = 'contain' | 'cover' | 'stretch' | 'center'
+export type ResizeMode = 'contain' | 'cover' | 'stretch' | 'center'
 
 const resizeMode = {
     contain: 'contain',
@@ -23,7 +25,7 @@ const resizeMode = {
     center: 'center',
 } as const
 
-type Priority = 'low' | 'normal' | 'high'
+export type Priority = 'low' | 'normal' | 'high'
 
 const priority = {
     low: 'low',
@@ -31,7 +33,7 @@ const priority = {
     high: 'high',
 } as const
 
-type Cache = 'low' | 'normal' | 'high'
+type Cache = 'immutable' | 'web' | 'cacheOnly'
 
 const cacheControl = {
     // Ignore headers, use uri as cache key, fetch only if not in cache.
@@ -78,7 +80,7 @@ export interface ImageStyle extends FlexStyle, TransformsStyle, ShadowStyleIOS {
     opacity?: number
 }
 
-export interface FastImageProps {
+export interface FastImageProps extends AccessibilityProps, ViewProps {
     source: Source | number
     resizeMode?: ResizeMode
     fallback?: boolean
@@ -138,13 +140,16 @@ function FastImageBase({
     style,
     fallback,
     children,
+    // eslint-disable-next-line no-shadow
     resizeMode = 'cover',
     forwardedRef,
     ...props
 }: FastImageProps & { forwardedRef: React.Ref<any> }) {
-    const resolvedSource = Image.resolveAssetSource(source as any)
-
     if (fallback) {
+        const cleanedSource = { ...(source as any) }
+        delete cleanedSource.cache
+        const resolvedSource = Image.resolveAssetSource(cleanedSource)
+
         return (
             <View style={[styles.imageContainer, style]} ref={forwardedRef}>
                 <Image
@@ -162,6 +167,8 @@ function FastImageBase({
             </View>
         )
     }
+
+    const resolvedSource = Image.resolveAssetSource(source as any)
 
     return (
         <View style={[styles.imageContainer, style]} ref={forwardedRef}>
@@ -192,7 +199,7 @@ const FastImageComponent: React.ComponentType<FastImageProps> = forwardRef(
 
 FastImageComponent.displayName = 'FastImage'
 
-interface FastImageStaticProperties {
+export interface FastImageStaticProperties {
     resizeMode: typeof resizeMode
     priority: typeof priority
     cacheControl: typeof cacheControl

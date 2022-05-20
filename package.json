@@ -81,5 +81,8 @@
     "peerDependencies": {
         "react": "^16.8.6 || ^17.0.0",
         "react-native": ">=0.60.0"
+    },
+    "dependencies": {
+        "@rocket.chat/react-native-fast-image": "RocketChat/react-native-fast-image#bump-version"
     }
 }
